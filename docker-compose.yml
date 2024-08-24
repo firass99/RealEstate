@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    user: root 
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: nestdb
+    #when we use networks & expose we provide sgbd to be in the same network no need to HOST:CONTAINER PORTS
+    ports:
+      - 5432:5432
+    volumes:
+    #is to create/save container's data in my host machine
+      - pgdb:/var/lib/postgresql/data
+    networks:
+      - db-net
+
+  pgadmin:
+  #pgadmin is WEB UI/ONSOLE FOR POSTGRES queries..
+    image: dpage/pgadmin4:latest
+    restart: always
+    ports:
+        #SOURCE : TARGET
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: firas123123
+    volumes:
+      - ./pgadmin-data:/var/lib/pgadmin
+    depends_on: 
+    #mate5dem b3d postgres container
+      - postgres
+    networks:
+      - db-net
+
+
+#DEFF
+volumes:
+  pgdb: 
+
+networks:
+  db-net:
