@@ -5,6 +5,8 @@ import { UpdatePropertyFeatureDto } from './dto/update-property-feature.dto';
 
 @Controller('property-feature')
 export class PropertyFeatureController {
+
+  
   constructor(private readonly propertyFeatureService: PropertyFeatureService) {}
 
   @Post()
