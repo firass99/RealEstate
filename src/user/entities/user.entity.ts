@@ -1,5 +1,5 @@
 import { Property } from "src/property/entities/property.entity";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -26,7 +26,9 @@ export class User {
     @OneToMany(()=>Property, (Property)=>Property.user)
     properties: Property[];
 
-    @ManyToMany(()=>Property)
+    @ManyToMany(()=>Property,(Property)=>Property.likedBy)
+    @JoinTable()
+    likeProperties:Property[];
     
     
 

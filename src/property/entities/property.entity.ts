@@ -1,6 +1,7 @@
-import { User } from './../../user/entities/user.entity';
-import { Column, Entity, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { PropertyFeature } from './../../property-feature/entities/property-feature.entity';
+import { PropertyType } from 'src/property-type/entities/property-type.entity';
+import { User } from "src/user/entities/user.entity";
 
 @Entity()
 export class Property {
@@ -23,7 +24,11 @@ export class Property {
     @ManyToOne(()=>User, (User)=>User.properties)
     user:User;
 
-    
+    @ManyToMany(()=>User, (User)=>User.likeProperties)
+    likedBy:User[];
+
+    @ManyToOne(()=>PropertyType,(PropertyType)=>PropertyType.property)
+    type:PropertyType;
 
 
 }

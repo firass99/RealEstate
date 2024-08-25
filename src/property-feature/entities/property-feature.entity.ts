@@ -28,7 +28,6 @@ export class PropertyFeature {
     @Column()
     hasBalcony:boolean;
     
-
     //()=> define target table, ()=> use to populate, cascade:["update.."]
     @OneToOne(()=>Property, (Property)=>Property.PropertyFeature)
     @JoinColumn()
