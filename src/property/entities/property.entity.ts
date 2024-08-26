@@ -12,14 +12,14 @@ export class Property {
     @Column()
     name:string;
 
-    @Column()
-    description:string;
-
     @Column({default:0})
     price:number;
 
-    @OneToOne(()=>PropertyFeature, (PropertyFeature)=>PropertyFeature.Property, {cascade:true})
-    PropertyFeature:PropertyFeature;
+    @Column()
+    description:string;
+
+    @OneToOne(()=>PropertyFeature, (PropertyFeature)=>PropertyFeature.property, {cascade:true})
+    propertyFeature:PropertyFeature;
 
     @ManyToOne(()=>User, (User)=>User.properties)
     user:User;

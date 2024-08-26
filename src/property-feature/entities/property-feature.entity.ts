@@ -29,8 +29,8 @@ export class PropertyFeature {
     hasBalcony:boolean;
     
     //()=> define target table, ()=> use to populate, cascade:["update.."]
-    @OneToOne(()=>Property, (Property)=>Property.PropertyFeature)
+    @OneToOne(()=>Property, (Property)=>Property.propertyFeature)
     @JoinColumn()
-    Property:Property;
+    property:Property;
 
 }
