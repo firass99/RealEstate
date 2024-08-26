@@ -1,5 +1,5 @@
-import { Property } from "src/property/entities/property.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Property } from "../../property/entities/property.entity";
 @Entity()
 export class PropertyType {
     @PrimaryGeneratedColumn()

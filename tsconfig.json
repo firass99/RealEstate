@@ -9,7 +9,10 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",   // This is correct
+    "paths": {
+      "*": ["*"]  // Add this to help resolve 'src/' paths
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,

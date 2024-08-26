@@ -1,20 +1,18 @@
-import { Property } from 'src/property/entities/property.entity';
-import { userFactory } from './user.factory';
+import { faker } from "@faker-js/faker";
 import { DataSource } from "typeorm";
 import { Seeder, SeederFactoryManager } from "typeorm-extension";
-import { PropertyType } from "src/property-type/entities/property-type.entity";
-import { User } from 'src/user/entities/user.entity';
-import { promises } from 'dns';
-import { PropertyFeature } from 'src/property-feature/entities/property-feature.entity';
-import { faker } from '@faker-js/faker';
+import { Property } from '../property/entities/property.entity';
+import { PropertyFeature } from '../property-feature/entities/property-feature.entity';
+import { PropertyType } from '../property-type/entities/property-type.entity';
+import { User } from '../user/entities/user.entity';
 
 
 export class MainSeeder implements Seeder{
-    public async run(dataSource:DataSource, factoryManager:SeederFactoryManager) : Promise<any>{
+    public async run(dbConfig:DataSource, factoryManager:SeederFactoryManager) : Promise<any>{
             /// datasource to access the entity repos, factory
 
             //no need for rep injection
-            const TypeRepo=dataSource.getRepository(PropertyType);
+            const TypeRepo=dbConfig.getRepository(PropertyType);
             console.log("Seeding proprety types...");
             const propertyTypes= await TypeRepo.save([
                 {value:'hello'}, {value:'appartment'}
@@ -32,18 +30,21 @@ export class MainSeeder implements Seeder{
 
             const properties=await Promise.all(
                 Array(50)
-                .fill("")
+                .fill('')
                 .map( async()=>{
                         const property=await propertyFactory.make({//make : dont save
                             //choose randomly fom users we created above
                             user: faker.helpers.arrayElement(users),
                             type: faker.helpers.arrayElement(propertyTypes),
-                            propertyFeature:await propertyFeatureFactory.save()                        })
+                            propertyFeature:await propertyFeatureFactory.save()                        
+                        })
+                        console.log("Seeding proprety features types...");
                         return property;
                     })
             )
+            console.log("Seeding proprety types...");
             //after promise.all we save prop
-            const propertyRepo= dataSource.getRepository(Property)
+            const propertyRepo= dbConfig.getRepository(Property)
             await propertyRepo.save(properties);
     }
     

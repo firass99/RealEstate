@@ -1,9 +1,8 @@
-import { LocatorInfo } from './../../node_modules/locter/dist/locator/types.d';
-import { setSeederFactory } from 'typeorm-extension';
-import { PropertyFeature } from './../property-feature/entities/property-feature.entity';
-import { Faker } from '@faker-js/faker';
+import { Faker } from "@faker-js/faker";
+import { PropertyFeature } from "../property-feature/entities/property-feature.entity";
+import { setSeederFactory } from "typeorm-extension";
 
-export const PropertyFeatureFactory = setSeederFactory(PropertyFeature, (faker:Faker)=>{
+export const propertyFeatureFactory = setSeederFactory(PropertyFeature, (faker:Faker)=>{
 
     const propfeatures= new PropertyFeature();
 

@@ -4,21 +4,13 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PropertyModule } from './property/property.module';
 import { PropertyFeatureModule } from './property-feature/property-feature.module';
-import { UserModule } from './user/user.module';
 import { PropertyTypeModule } from './property-type/property-type.module';
+import { UserModule } from './user/user.module';
+import { dbConfig } from './config/dbConfig';
 
 @Module({
-  imports: [PropertyModule, TypeOrmModule.forRoot({ 
-    type:'postgres',
-    host:'localhost',
-    port:5432,
-    username:'admin',
-    password:'admin',
-    database:'postgres',
-    autoLoadEntities:true,
-    //only in dev mode/phase:
-    synchronize:true
-  }), PropertyFeatureModule, UserModule, PropertyTypeModule
+  imports: [PropertyModule, 
+    TypeOrmModule.forRoot(dbConfig), PropertyFeatureModule, UserModule, PropertyTypeModule
 
 ],
   controllers: [AppController],

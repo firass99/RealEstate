@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { PropertyFeature } from './../../property-feature/entities/property-feature.entity';
-import { PropertyType } from 'src/property-type/entities/property-type.entity';
-import { User } from "src/user/entities/user.entity";
+import { PropertyFeature } from "../../property-feature/entities/property-feature.entity";
+import { PropertyType } from "../../property-type/entities/property-type.entity";
+import { User } from "../../user/entities/user.entity";
 
 @Entity()
 export class Property {

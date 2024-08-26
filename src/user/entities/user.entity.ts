@@ -1,5 +1,5 @@
-import { Property } from "src/property/entities/property.entity";
 import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Property } from "../../property/entities/property.entity";
 
 @Entity()
 export class User {
