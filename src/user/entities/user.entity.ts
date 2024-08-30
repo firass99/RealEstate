@@ -1,5 +1,7 @@
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Property } from "../../property/entities/property.entity";
+const bcrypt = require('bcryptjs');
+
 
 @Entity()
 export class User {
@@ -16,11 +18,14 @@ export class User {
     @Column()
     email:string;
     
-    @Column()
+    @Column({ nullable: true })    
     avatarUrl:string;
 
     @CreateDateColumn()
     createdAt:Date;
+
+    @Column()
+    password:string;
 
     //in relations callback functions, and reverse callback function is a must
     @OneToMany(()=>Property, (Property)=>Property.user)
@@ -30,6 +35,11 @@ export class User {
     @JoinTable()
     likeProperties:Property[];
     
+
+    @BeforeInsert()
+    async hashPassword(){
+        this.password = await bcrypt.hash(this.password, 10);
+    }
     
 
 }

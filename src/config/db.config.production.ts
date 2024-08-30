@@ -10,8 +10,6 @@ export default (): PostgresConnectionOptions => ({
     password: String(process.env.password || 'admin'), // Convert to string explicitly
     database: process.env.database || 'postgres',
     entities: [path.join(__dirname, '../**/*.entity{.ts,.js}')],
-    //   entities: [path.resolve(__dirname, '..') + '/**/*.entity{.ts,.js}'],
-
-    synchronize: true, // Do not set to true in production
+    synchronize: false, // Do not set to true in production
 });
 

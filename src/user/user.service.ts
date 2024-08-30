@@ -12,8 +12,10 @@ export class UserService {
     @InjectRepository(User) private userRepo: Repository<User>
   ){}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    const usr= await this.userRepo.create(createUserDto);
+    //we have to create->save, to trigger the @BeforeInsert in the user model
+    return await this.userRepo.save(usr);
   }
 
   findAll() {

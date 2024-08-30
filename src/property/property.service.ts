@@ -1,9 +1,11 @@
+import { paginationDto } from './dto/pagination.dto';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Property } from './entities/property.entity';
+import { DEFAULT_PAGE_SIZE } from '../utils/constants';
 
 @Injectable()
 export class PropertyService {
@@ -15,8 +17,13 @@ export class PropertyService {
   async create(createPropertyDto: CreatePropertyDto) {
     return await this.propertyRepo.save(createPropertyDto)  }
 
-  async findAll() {
-    return await this.propertyRepo.find()
+  async findAll(paginationDto:paginationDto) {
+
+
+    return await this.propertyRepo.find({
+      skip:paginationDto.skip,
+      take:paginationDto.limit ?? DEFAULT_PAGE_SIZE
+    })
   }
 
   async findOne(id: number) {

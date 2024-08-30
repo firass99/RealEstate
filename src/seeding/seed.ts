@@ -1,13 +1,13 @@
 import { runSeeders, SeederOptions } from "typeorm-extension";
 import { DataSource, DataSourceOptions } from "typeorm";
-import { dbConfig } from "../config/dbConfig";
 import { MainSeeder } from "./main.seeder";
 import { propertyFactory } from "./property.factory";
 import { propertyFeatureFactory } from "./propertyfeatures.factory";
 import { userFactory } from "./user.factory";
+import dbConfig from "../config/dbConfig";
 
 const options: DataSourceOptions & SeederOptions = {
-    ...dbConfig,
+    ...dbConfig(),
     factories: [propertyFactory, userFactory, propertyFeatureFactory],
   //MainSeeder coem from mainSeeders ..
     seeds: [MainSeeder]
