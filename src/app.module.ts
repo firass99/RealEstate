@@ -7,6 +7,7 @@ import { PropertyFeatureModule } from './property-feature/property-feature.modul
 import { PropertyTypeModule } from './property-type/property-type.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 import dbConfig from './config/dbConfig';
 import dbConfigProduction from './config/db.config.production';
 
@@ -24,7 +25,7 @@ import dbConfigProduction from './config/db.config.production';
     TypeOrmModule.forRootAsync({ 
       useFactory:process.env.NODE_ENV==="production"? dbConfigProduction:dbConfig 
     }),
-    PropertyModule, PropertyFeatureModule, UserModule, PropertyTypeModule
+    PropertyModule, PropertyFeatureModule, UserModule, PropertyTypeModule, AuthModule
 ],
   controllers: [AppController],
   providers: [AppService],

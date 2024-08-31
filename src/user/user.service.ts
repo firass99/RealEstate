@@ -12,10 +12,20 @@ export class UserService {
     @InjectRepository(User) private userRepo: Repository<User>
   ){}
 
+
   async create(createUserDto: CreateUserDto) {
     const usr= await this.userRepo.create(createUserDto);
     //we have to create->save, to trigger the @BeforeInsert in the user model
     return await this.userRepo.save(usr);
+  }
+
+
+  async findByEmail(email: string) {
+    return await this.userRepo.findOne({
+      where: {
+        email,
+      },
+    });
   }
 
   findAll() {

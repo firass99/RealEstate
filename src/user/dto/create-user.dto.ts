@@ -10,7 +10,7 @@ export class CreateUserDto {
     @IsString()
     @IsEmail()
     email:string;
-    
+
     @IsOptional()
     @IsString()
     @IsUrl()
