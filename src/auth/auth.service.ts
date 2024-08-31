@@ -1,3 +1,4 @@
+import { IsEmail } from 'class-validator';
 import { UserService } from './../user/user.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { compare } from 'bcrypt';
@@ -6,18 +7,18 @@ import { compare } from 'bcrypt';
 export class AuthService {
 
 
-    constructor(private userService: UserService){}
+    constructor(private userService:UserService){}
 
     async validateUser(email:string, password:string) {
         const user=await this.userService.findByEmail(email);
-
-            if (!user) throw new UnauthorizedException("User not found");
+        if (!user){
+            throw new UnauthorizedException("User not found");}
 
         const validPassword=await compare(password, user.password);
 
-            if (!validPassword) throw new UnauthorizedException('Invalid credentials');
-
-            return {id: user.id};
+        if (!validPassword){
+            throw new UnauthorizedException('Invalid credentials');}
+        return {'id':user.id};
 
         
     }
