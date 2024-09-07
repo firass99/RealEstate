@@ -1,17 +1,31 @@
-import { Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { UserService } from './../user/user.service';
+import { Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from '@nestjs/passport';
+import { LocalAuthGuard } from './guards/local-auth/local-auth.guard';
+import { JwtAuthGuard } from './guards/jwt-auth/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService, private readonly userService:UserService) {}
   
 
   @HttpCode(HttpStatus.OK)
-  @UseGuards(AuthGuard("local"))
+  @UseGuards(LocalAuthGuard) // Ensure 'local' is the correct strategy name
   @Post('login')
   async login(@Request() req){
-    return req.user;
-
+  
+    const token=await this.authService.login(req.user.id);
+    return {id:req.user.id ,token}
   }
+
+
+
+  @UseGuards(JwtAuthGuard) 
+  // Ensure 'jwt' is the correct strategy name and will return the id in user object to request 
+  @Get('profile')
+  getProfile(@Request() req){
+    return this.userService.findOne(req.user.id)
+  }
+
+
 }

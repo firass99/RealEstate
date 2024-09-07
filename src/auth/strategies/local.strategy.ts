@@ -1,11 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy } from "passport-local";
 import { AuthService } from "../auth.service";
 
 @Injectable()
-export class LocalStrategies extends PassportStrategy(Strategy){
-
+export class LocalStrategy extends PassportStrategy(Strategy){
+//Strategy will xtract from request and validate it
 
     constructor (private authService: AuthService){
         //pass configuration object
@@ -16,11 +16,15 @@ export class LocalStrategies extends PassportStrategy(Strategy){
                     but my passwordfield called 'password(defaultname)' so no need to define                 
                     as : passwordfield:'password'
                     **/} );}
-
-            
-    //out of constructor
-    validate(email:string, password:string){
-        return this.authService.validateUser(email,password)
-    }
-
+    /**out of constructor
+    async validate(email:string, password:string){
+        return await this.authService.validateUser(email,password)
+    }*/
+    async validate(email: string, password: string) {
+        //extract email& pwf from request and validate
+        const user = await this.authService.validateUser(email, password);
+        if (!user) {
+        throw new UnauthorizedException('Invalid credentials');
+        }
+        return user;}
 }

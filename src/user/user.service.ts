@@ -21,26 +21,24 @@ export class UserService {
 
 
   async findByEmail(email: string) {
-    return await this.userRepo.findOne({
-      where: {
-        email,
-      },
+    return await this.userRepo.findOne({ where: { email } });
+  }
+
+  async findAll() {
+    return await this.userRepo.find();
+  }
+
+  async findOne(id: number) {
+    return await this.userRepo.findOne(
+      { where: { id }, select:['firstName','lastName','avatarUrl']
     });
   }
+  
 
-  findAll() {
-    return `This action returns all user`;
-  }
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepo.findOne({where:{id}});
+    return await this.userRepo.save({ ...user, ...updateUserDto });  }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+  async remove(id: number) {
+    await this.userRepo.delete(id);  }
 }

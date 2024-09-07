@@ -10,22 +10,19 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import dbConfig from './config/dbConfig';
 import dbConfigProduction from './config/db.config.production';
-
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      //usgin config globaly
-      isGlobal:true,
-
-      //expension
-      expandVariables:true,
-      //load config file
-      load:[dbConfig] 
-    }),
     TypeOrmModule.forRootAsync({ 
       useFactory:process.env.NODE_ENV==="production"? dbConfigProduction:dbConfig 
     }),
-    PropertyModule, PropertyFeatureModule, UserModule, PropertyTypeModule, AuthModule
+    ConfigModule.forRoot({      
+      envFilePath: '.env',
+      isGlobal:true,//using config globaly
+      expandVariables:true,//expension
+      load:[dbConfig], //load config file
+    }),
+    UserModule,
+    AuthModule, PropertyModule, PropertyFeatureModule,  PropertyTypeModule,
 ],
   controllers: [AppController],
   providers: [AppService],
