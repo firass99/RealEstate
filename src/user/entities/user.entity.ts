@@ -27,6 +27,9 @@ export class User {
     @Column()
     password:string;
 
+    @Column()
+    hashedRefreshToken:string;
+
     //in relations callback functions, and reverse callback function is a must
     @OneToMany(()=>Property, (Property)=>Property.user)
     properties: Property[];
