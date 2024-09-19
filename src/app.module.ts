@@ -22,7 +22,7 @@ import dbConfigProduction from './config/db.config.production';
       load:[dbConfig], //load config file
     }),
     UserModule,
-    AuthModule, PropertyModule, PropertyFeatureModule,  PropertyTypeModule,
+     AuthModule, PropertyModule, PropertyFeatureModule,  PropertyTypeModule,
 ],
   controllers: [AppController],
   providers: [AppService],

@@ -35,9 +35,12 @@ export class AuthController {
   refreshToken(@Request() req){
     return this.authService.refreshToken(req.user.id)}
 
-
-
-
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @Post('logout')
+  logout(@Request() req){
+    this.authService.logout(req.user.id);
+  }
 
 
 

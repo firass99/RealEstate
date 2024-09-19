@@ -1,5 +1,6 @@
 import { BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Property } from "../../property/entities/property.entity";
+import { Role } from "../../auth/enums/role.enum";
 const bcrypt = require('bcryptjs');
 
 
@@ -27,7 +28,14 @@ export class User {
     @Column()
     password:string;
 
-    @Column()
+    @Column({
+        type:'enum',
+        enum:Role,
+        default:Role.USER
+    })
+    role:Role;
+
+    @Column({nullable:true})
     hashedRefreshToken:string;
 
     //in relations callback functions, and reverse callback function is a must
